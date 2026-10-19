@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Murilo Ferreira Lopes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Murilo Ferreira Lopes: software engineer. Robotics, machine learning, backend, games.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: three beats. (1) a compact main screen, (2) the three best projects side by side,
+   (3) one timeline: a sticky year readout on the left, events on a glowing rail that pop in and out as they
+   cross the viewport. Committed dark "workshop" look: graphite on a faint blueprint grid, lavender + signal red
+   from the robotic arm, with soft glow instead of hard borders. Big Shoulders for display, Plex for reading. */
+:root{
+  --g0:#0d0c12;
+  --g1:#16141e;
+  --g2:#262335;
+  --ink:#eeedf4;
+  --dim:#a19db3;
+  --lav:#b9a8ff;
+  --red:#ff4a3d;
+  --teal:#5fd8b8;
+  --amber:#ffb84d;
+  --f-d:"Big Shoulders Display","Oswald","Arial Narrow",Impact,sans-serif;
+  --f:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background-color:var(--g0);color:var(--ink);font-family:var(--f);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:linear-gradient(rgba(185,168,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(185,168,255,.04) 1px,transparent 1px);background-size:48px 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--g0)}
+p,h1,h2,h3,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+img,video{display:block;max-width:100%}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--lav);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--mono)}
+.label{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.disp{font-family:var(--f-d);font-weight:900;text-transform:uppercase;line-height:.88}
+.grad{background:linear-gradient(90deg,var(--lav),#ff8a7e);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);background:rgba(13,12,18,.7);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--g2)}
+.nav .wrap{height:54px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav .me{font-family:var(--mono);font-size:13px;font-weight:500;text-decoration:none}
+.nav .me b{color:var(--red)}
+.nav ul{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.nav ul a{text-decoration:none;color:var(--dim)}
+.nav ul a:hover{color:var(--ink)}
+.nav .cta{font-family:var(--mono);font-size:12px;text-decoration:none;border:1px solid var(--lav);color:var(--lav);padding:6px 12px;border-radius:999px}
+.nav .cta:hover{background:var(--lav);color:var(--g0)}
+@media (max-width:760px){.nav ul{display:none}}
+
+/* ---------- main ---------- */
+.main{overflow-x:clip;position:relative;isolation:isolate;overflow:hidden;padding-top:calc(env(safe-area-inset-top,0px) + 110px);padding-bottom:40px}
+.main::before{content:"";position:absolute;right:-8%;top:-10%;width:min(900px,80vw);aspect-ratio:1;z-index:-1;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(124,92,255,.32),transparent 70%),radial-gradient(closest-side at 72% 72%,rgba(255,74,61,.2),transparent 70%)}
+@media (prefers-reduced-motion:no-preference){.main::before{animation:breathe 10s ease-in-out infinite}@keyframes breathe{50%{transform:translate(-4%,5%) scale(1.07)}}}
+.main-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:32px;align-items:center}
+.who{display:flex;align-items:center;gap:14px}
+.avatar{width:54px;height:54px;border-radius:50%;object-fit:cover;outline:2px solid var(--lav);outline-offset:3px}
+.who b{display:block;font-weight:600}
+.live{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.live i{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 10px #3ddc84}
+.main h1{font-size:clamp(66px,11vw,156px);margin-top:22px;letter-spacing:.005em}
+.main h1 .ln{display:block;overflow:hidden}
+.main h1 .ln > span{display:inline-block}
+.main h1 .ln:last-child{color:transparent;-webkit-text-stroke:2px var(--lav)}
+@media (prefers-reduced-motion:no-preference){
+  .main h1 .ln > span{animation:up .9s cubic-bezier(.2,.8,.2,1) both}
+  .main h1 .ln:last-child > span{animation-delay:.12s}
+  .main .fade{animation:fadeup .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:.35s}
+  @keyframes up{from{transform:translateY(105%)}}
+  @keyframes fadeup{from{opacity:0;transform:translateY(16px)}}
+}
+.pitch{font-size:clamp(18px,1.7vw,21px);max-width:32em;margin-top:20px;color:#cfccdc}
+.pitch strong{font-weight:600}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.facts li{font-size:13.5px;padding:7px 12px;border-radius:10px;background:rgba(22,20,30,.8);border:1px solid var(--g2)}
+.facts li b{color:var(--ink);font-weight:600}
+.facts li span{color:var(--dim)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;padding:11px 16px;border-radius:999px;border:1px solid var(--g2);background:var(--g1);text-decoration:none;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,color .2s}
+.btn:hover{transform:translateY(-2px);border-color:var(--lav)}
+.btn.solid{background:var(--lav);color:var(--g0);border-color:var(--lav);font-weight:500}
+.btn.solid:hover{background:var(--ink);border-color:var(--ink)}
+.toast{font-family:var(--mono);font-size:12px;color:var(--lav);min-height:18px;margin-top:8px}
+.arm{justify-self:center;width:min(100%,300px);position:relative}
+.arm img{width:100%;height:auto;filter:drop-shadow(0 30px 50px rgba(0,0,0,.6))}
+@media (prefers-reduced-motion:no-preference){.arm img{animation:float 7s ease-in-out infinite}@keyframes float{50%{transform:translateY(-12px) rotate(-1.5deg)}}}
+.arm figcaption{position:absolute;left:-10px;bottom:12%;font-family:var(--mono);font-size:11px;background:rgba(13,12,18,.85);border:1px solid var(--g2);padding:4px 8px;border-radius:6px;white-space:nowrap}
+.arm figcaption i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red);margin-right:6px;vertical-align:1px}
+@media (max-width:860px){.main-grid{grid-template-columns:1fr}.arm{display:none}}
+
+main{overflow-x:clip}
+/* section heads */
+.sec{padding-block:72px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.head h2{font-family:var(--f-d);font-weight:900;text-transform:uppercase;font-size:clamp(40px,5.4vw,68px);line-height:.9;margin-top:6px}
+
+/* ---------- top 3 ---------- */
+.top3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.pc{position:relative;display:flex;flex-direction:column;border-radius:18px;overflow:hidden;border:1px solid transparent;
+  background:linear-gradient(var(--g1),var(--g1)) padding-box,linear-gradient(150deg,rgba(185,168,255,.5),rgba(38,35,53,.9) 45%,rgba(255,74,61,.35)) border-box;
+  transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s;min-width:0}
+.pc:hover{transform:translateY(-6px);box-shadow:0 30px 70px -30px rgba(124,92,255,.6)}
+.pc .media{aspect-ratio:4/3;overflow:hidden;background:#1d1a28;position:relative}
+.pc .media img{width:100%;height:100%;object-fit:cover;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.pc:hover .media img{transform:scale(1.06)}
+.pc .media .split{display:grid;grid-template-columns:1fr 1fr;height:100%;gap:1px;background:var(--g2)}
+.pc .media .split img{height:100%}
+.pc .media .tg{position:absolute;bottom:8px;font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:4px;background:rgba(13,12,18,.85)}
+.pc .media .tg.l{left:8px}.pc .media .tg.r{right:8px;background:var(--red);color:#fff}
+.pc .body{padding:20px 20px 22px;display:flex;flex-direction:column;gap:10px;flex:1}
+.pc .k{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.pc .k span:first-child{color:var(--red)}
+.pc .k span:last-child{color:var(--dim)}
+.pc h3{font-family:var(--f-d);font-weight:900;text-transform:uppercase;font-size:34px;line-height:.92}
+.pc p{color:#cdcadb;font-size:15px}
+.pc .stat{font-family:var(--f-d);font-weight:800;font-size:26px;color:var(--lav)}
+.pc .stat small{font-family:var(--f);font-size:12.5px;font-weight:400;color:var(--dim);margin-left:6px}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto;padding-top:4px}
+.chips span{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--g2);color:#d6d3e2}
+.pc a.more{font-family:var(--mono);font-size:12.5px;color:var(--lav);text-decoration:none}
+.pc a.more:hover{color:var(--ink)}
+@supports (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){
+  .pc{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+  .pc:nth-child(2){animation-range:entry 8% entry 78%}
+  .pc:nth-child(3){animation-range:entry 16% entry 86%}
+  @keyframes rise{from{opacity:.2;transform:translateY(70px) scale(.96)}}
+}}
+@media (max-width:900px){.top3{grid-template-columns:1fr;max-width:560px}}
+
+/* ---------- timeline ---------- */
+.tl-wrap{display:grid;grid-template-columns:240px minmax(0,1fr);gap:40px;align-items:start}
+.yearbox{position:sticky;top:calc(env(safe-area-inset-top,0px) + 90px)}
+.yearbox .yr{font-family:var(--f-d);font-weight:900;font-size:clamp(64px,7vw,104px);line-height:.85;white-space:nowrap;font-variant-numeric:tabular-nums;background:linear-gradient(180deg,#fff,var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;display:block;transition:opacity .25s,transform .25s}
+.yearbox .yr.flip{opacity:0;transform:translateY(-14px)}
+.yearbox .legend{display:grid;gap:6px;margin-top:20px;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+.yearbox .legend span{display:flex;align-items:center;gap:8px}
+.yearbox .legend i{width:9px;height:9px;border-radius:50%}
+.rail{position:relative;padding-left:34px;view-timeline:--rail block}
+.rail::before{content:"";position:absolute;left:6px;top:0;bottom:0;width:2px;background:var(--g2)}
+.rail .fill{position:absolute;left:6px;top:0;bottom:0;width:2px;background:linear-gradient(var(--lav),var(--red));box-shadow:0 0 14px rgba(185,168,255,.7);transform-origin:top}
+@supports (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){
+  .rail .fill{animation:fill linear both;animation-timeline:--rail;animation-range:entry 40% exit 60%}
+  @keyframes fill{from{transform:scaleY(0)}}
+}}
+.yr-mark{font-family:var(--f-d);font-weight:800;font-size:22px;color:var(--dim);margin:34px 0 12px;position:relative}
+.yr-mark::before{content:"";position:absolute;left:-34px;top:50%;width:14px;height:2px;background:var(--dim)}
+.yr-mark:first-of-type{margin-top:0}
+
+.ev{--c:var(--lav);position:relative;margin-bottom:18px;display:grid;grid-template-columns:minmax(0,1fr) 210px;gap:20px;align-items:center;padding:20px;border-radius:16px;background:rgba(22,20,30,.82);border:1px solid var(--g2);transition:border-color .4s,box-shadow .4s}
+.ev.noimg{grid-template-columns:1fr}
+.ev::before{content:"";position:absolute;left:-34px;top:28px;width:14px;height:14px;border-radius:50%;background:var(--g0);border:2px solid var(--c);transition:background .3s,box-shadow .3s}
+.ev.act{border-color:color-mix(in srgb,var(--c) 55%,var(--g2));box-shadow:0 20px 60px -30px color-mix(in srgb,var(--c) 60%,transparent)}
+.ev.act::before{background:var(--c);box-shadow:0 0 16px var(--c)}
+.ev.work{--c:var(--lav)}
+.ev.proj{--c:var(--teal)}
+.ev.award{--c:var(--red)}
+.ev.lead{--c:var(--amber)}
+.ev .top{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+.ev .top .t{color:var(--c)}
+.ev .top .d{color:var(--dim)}
+.ev h3{font-size:20px;font-weight:600;line-height:1.25;margin-top:6px}
+.ev h3 img.logo{display:inline-block;width:24px;height:auto;margin-right:8px;vertical-align:-3px}
+.ev h3 a{color:var(--lav);text-decoration:none}
+.ev h3 a:hover{text-decoration:underline}
+.ev p{color:#c8c5d6;font-size:15px;margin-top:6px}
+.ev p b{color:var(--ink);font-weight:600}
+.ev .ph{border-radius:12px;overflow:hidden;aspect-ratio:4/3;background:#1d1a28}
+.ev .ph img,.ev .ph video{width:100%;height:100%;object-fit:cover}
+.ev .ph.two{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.ev .lk{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:12.5px;color:var(--lav);text-decoration:none}
+.ev .lk:hover{color:var(--ink)}
+.ev .badge{display:inline-block;font-family:var(--mono);font-size:10.5px;color:var(--dim);border:1px solid var(--g2);border-radius:999px;padding:1px 7px;margin-left:4px;vertical-align:2px}
+/* pop in and out as events cross the viewport (fully visible while in view) */
+@supports (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){
+  .ev{animation:pop linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+  @keyframes pop{
+    0%{opacity:.08;transform:translateX(70px) scale(.92)}
+    22%,74%{opacity:1;transform:none}
+    100%{opacity:.08;transform:translateX(-40px) scale(.94)}
+  }
+}}
+/* fallback for browsers without scroll timelines */
+.io .ev{opacity:.15;transform:translateX(50px) scale(.95);transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .6s cubic-bezier(.2,.8,.2,1),border-color .4s,box-shadow .4s}
+.io .ev.in{opacity:1;transform:none}
+@media (max-width:860px){
+  .tl-wrap{grid-template-columns:1fr;gap:0}
+  .yearbox{top:calc(env(safe-area-inset-top,0px) + 54px);z-index:5;background:rgba(13,12,18,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);padding:8px 0;margin-bottom:12px;display:flex;align-items:center;gap:16px}
+  .yearbox .yr{font-size:44px}
+  .yearbox .legend{display:flex;flex-wrap:wrap;margin:0;gap:4px 12px}
+  .yearbox .label{display:none}
+  .ev{grid-template-columns:1fr}
+  @keyframes pop{0%{opacity:.08;transform:translateY(40px) scale(.95)}22%,74%{opacity:1;transform:none}100%{opacity:.08;transform:translateY(-30px) scale(.95)}}
+  .ev .ph{max-width:420px}
+}
+
+
+/* event details */
+.ev.big{grid-template-columns:minmax(0,1fr) 300px}
+.ev ul.pts{margin-top:10px;display:grid;gap:5px;font-size:14.5px;color:#c8c5d6}
+.ev ul.pts li{padding-left:16px;position:relative}
+.ev ul.pts li::before{content:"";position:absolute;left:1px;top:.62em;width:6px;height:6px;background:var(--c);transform:rotate(45deg)}
+.ev ul.pts b{color:var(--ink);font-weight:600}
+.ev .chips{margin-top:12px}
+.ev .ph figure{margin:0;position:relative;overflow:hidden}
+.ev .ph.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;aspect-ratio:auto;background:transparent}
+.ev .ph.trio img{aspect-ratio:1;height:auto}
+.ev .ph.stack{display:grid;grid-template-rows:1fr 1fr;gap:2px;aspect-ratio:4/5}
+.ev .ph .tg,.pc .media .tg2{position:absolute;left:5px;bottom:5px;font-family:var(--mono);font-size:10px;padding:1px 6px;border-radius:4px;background:rgba(13,12,18,.85);color:#fff}
+.ev .ph figure:last-child .tg.hot,.pc .media .tg2.hot{background:var(--red)}
+.pc .media .trio3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;height:100%;background:var(--g2)}
+.pc .media .trio3 figure{margin:0;position:relative;overflow:hidden}
+.pc .media .trio3 img{height:100%}
+@media (max-width:860px){.ev.big{grid-template-columns:1fr}.ev .ph.stack{aspect-ratio:auto;grid-template-rows:none;grid-template-columns:1fr 1fr}.ev .ph.stack img{aspect-ratio:4/3}}
+
+/* experience cards */
+.xp{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:18px}
+.xc{display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:18px;background:rgba(22,20,30,.85);border:1px solid var(--g2);min-width:0;transition:transform .4s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .4s}
+.xc:hover{transform:translateY(-5px);border-color:rgba(185,168,255,.5);box-shadow:0 30px 70px -35px rgba(124,92,255,.6)}
+.xc .hd{display:flex;align-items:center;gap:12px}
+.xc .hd img{width:38px;height:auto}
+.xc .mk{width:38px;height:38px;border-radius:10px;display:grid;place-items:center;font-family:var(--f-d);font-weight:900;font-size:20px;background:var(--g2);color:var(--lav);flex:none}
+.xc .when{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.04em}
+.xc h3{font-family:var(--f-d);font-weight:900;text-transform:uppercase;font-size:30px;line-height:.95}
+.xc .org{font-size:14px;color:var(--dim);margin-top:-4px}
+.xc .org a{color:var(--lav);text-decoration:none}
+.xc .org a:hover{text-decoration:underline}
+.xc ul{display:grid;gap:6px;font-size:14.5px;color:#c8c5d6}
+.xc li{padding-left:16px;position:relative}
+.xc li::before{content:"";position:absolute;left:1px;top:.62em;width:6px;height:6px;background:var(--lav);transform:rotate(45deg)}
+.xc li b{color:var(--ink);font-weight:600}
+.xc .ph{margin-top:auto;border-radius:12px;overflow:hidden;aspect-ratio:16/10}
+.xc .ph img{width:100%;height:100%;object-fit:cover}
+.xc .code{margin-top:auto;border-radius:12px;background:var(--g0);border:1px solid var(--g2);padding:14px;font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--dim)}
+.xc .code .k{color:var(--lav)}.xc .code .s{color:#ff9b91}
+.xc.feat{border-color:transparent;background:linear-gradient(var(--g1),var(--g1)) padding-box,linear-gradient(150deg,rgba(95,216,184,.55),rgba(38,35,53,.9) 45%,rgba(185,168,255,.45)) border-box}
+@supports (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){
+  .xc{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 70%}
+  .xc:nth-child(2){animation-range:entry 8% entry 78%}
+  .xc:nth-child(3){animation-range:entry 16% entry 86%}
+}}
+@media (max-width:960px){.xp{grid-template-columns:1fr;max-width:620px}}
+
+/* soft skills */
+.soft{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.sk{padding:20px;border-radius:16px;background:rgba(22,20,30,.85);border:1px solid var(--g2);display:flex;flex-direction:column;gap:8px;transition:border-color .3s,transform .4s cubic-bezier(.2,.8,.2,1)}
+.sk:hover{border-color:rgba(255,184,77,.55);transform:translateY(-3px)}
+.sk h3{font-size:18px;font-weight:600;display:flex;align-items:center;gap:10px}
+.sk h3 i{width:10px;height:10px;border-radius:3px;background:var(--amber);box-shadow:0 0 12px rgba(255,184,77,.7);transform:rotate(45deg);flex:none}
+.sk p{font-size:14.5px;color:#c8c5d6}
+.sk .ev-l{font-family:var(--mono);font-size:11.5px;color:var(--dim);margin-top:auto;padding-top:6px;border-top:1px solid var(--g2)}
+@supports (animation-timeline:view()){@media (prefers-reduced-motion:no-preference){
+  .sk{animation:rise linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+}}
+@media (max-width:900px){.soft{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.soft{grid-template-columns:1fr}}
+/* toolbox */
+.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.tools div{padding:16px;border-radius:14px;background:rgba(22,20,30,.82);border:1px solid var(--g2)}
+.tools h3{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--lav);margin-bottom:8px}
+.tools p{font-size:14.5px;color:#d6d3e2}
+@media (max-width:860px){.tools{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.tools{grid-template-columns:1fr}}
+
+/* contact */
+footer{position:relative;isolation:isolate;overflow:hidden;padding-block:80px 64px;border-top:1px solid var(--g2)}
+footer::before{content:"";position:absolute;left:-10%;bottom:-40%;width:min(900px,90vw);aspect-ratio:1;z-index:-1;background:radial-gradient(closest-side,rgba(124,92,255,.25),transparent 70%)}
+footer h2{font-size:clamp(56px,10vw,140px)}
+.mail{display:inline-block;margin-top:24px;background:none;border:0;border-bottom:2px solid var(--lav);padding:0 0 3px;cursor:pointer;font-family:var(--mono);font-size:clamp(17px,2.4vw,26px);text-align:left;word-break:break-all}
+.mail:hover{color:var(--lav)}
+.links{display:flex;gap:20px;flex-wrap:wrap;margin-top:28px;font-family:var(--mono);font-size:13px}
+.links a{color:var(--dim);text-decoration:none}
+.links a:hover{color:var(--ink)}
+.fine{margin-top:36px;font-family:var(--mono);font-size:11.5px;color:var(--dim)}
+</style>
+<style>[hidden]{display:none!important}body{margin:0}</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="me" href="#top">murilo<b>.</b>lopes</a>
+    <ul><li><a href="#experience">Experience</a></li><li><a href="#best">Best work</a></li><li><a href="#timeline">Timeline</a></li><li><a href="#tools">Toolbox</a></li><li><a href="#soft">How I work</a></li></ul>
+    <a class="cta" href="#contact">Get in touch</a>
+  </div>
+</nav>
+
+<header class="main" id="top">
+  <div class="wrap main-grid">
+    <div>
+      <div class="who fade">
+        <img class="avatar" src="img/profile.webp" alt="Portrait of Murilo Ferreira Lopes" width="54" height="54">
+        <div><b>Murilo Ferreira Lopes</b><span class="live"><i aria-hidden="true"></i>Open to SWE internships & new-grad roles</span></div>
+      </div>
+      <h1 class="disp" aria-label="Murilo Lopes"><span class="ln" aria-hidden="true"><span>Murilo</span></span><span class="ln" aria-hidden="true"><span>Lopes</span></span></h1>
+      <p class="pitch fade">Software engineer who builds things that <strong class="grad">move</strong>: Go automation, computer vision, robotics and games.</p>
+      <ul class="facts fade">
+        <li><b>Openlane</b> <span>SWE intern</span></li>
+        <li><b>3.96</b> <span>GPA · Elon CS ’27</span></li>
+        <li><b>Phi Beta Kappa</b> <span>as a junior</span></li>
+        <li><b>CCSC</b> <span>2nd ’24 · 3rd ’25</span></li>
+        <li><b>Pi Mu Epsilon</b> <span>math honor society</span></li>
+      </ul>
+      <div class="actions fade">
+        <button class="btn solid" type="button" data-copy>Copy email</button>
+        <a class="btn" href="https://www.linkedin.com/in/murilo-ferreira-lopes" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="https://github.com/MuriloLopes477" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+      <p class="toast" role="status" aria-live="polite"></p>
+    </div>
+    <figure class="arm">
+      <img src="img/arm-internals.webp" alt="Murilo's sign language robotic arm with the forearm opened, showing its servos" width="463" height="1215">
+      <figcaption><i></i>16-servo robotic arm, built by me</figcaption>
+    </figure>
+  </div>
+</header>
+
+<main>
+  <section class="sec" id="experience">
+    <div class="wrap">
+      <div class="head"><div><span class="label">Where I've worked</span><h2>Experience</h2></div><span class="label">Industry · Research · Public sector</span></div>
+      <div class="xp">
+        <article class="xc feat">
+          <div class="hd"><img src="img/openlane.webp" alt="Openlane logo" width="38" height="33"><span class="when">Feb – May 2026</span></div>
+          <h3>Software Engineer Intern</h3>
+          <p class="org"><a href="https://www.linkedin.com/company/theopenlane/posts/" target="_blank" rel="noopener">Openlane ↗</a></p>
+          <ul>
+            <li>Designed and built <b>Go</b> automation that streamlines business compliance workflows and reduces manual review.</li>
+            <li>Automated <b>GraphQL</b> schema and query generation, cutting repetitive boilerplate.</li>
+            <li>Wrote <b>CI/CD</b> test suites that catch regressions before deployment.</li>
+          </ul>
+          <div class="code" aria-hidden="true"><span class="k">compliance</span> → go automation<br><span class="k">schema</span> → graphql codegen<br><span class="k">every PR</span> → <span class="s">ci test suite ✓</span></div>
+        </article>
+        <article class="xc">
+          <div class="hd"><span class="mk" aria-hidden="true">E</span><span class="when">May 2024 – Jan 2025</span></div>
+          <h3>Computational Modeling Research</h3>
+          <p class="org">Elon University</p>
+          <ul>
+            <li>Modeled SARS-CoV-2 and immune response with <b>differential equations</b>.</li>
+            <li>Took a legacy <b>MATLAB</b> simulation from <b>24+ hours to 15 minutes</b>.</li>
+          </ul>
+          <div class="ph"><img src="img/research-mathfest.webp" alt="Murilo with his research group at MAA MathFest 2024" width="880" height="657" loading="lazy"></div>
+        </article>
+        <article class="xc">
+          <div class="hd"><span class="mk" aria-hidden="true">M</span><span class="when">Internship</span></div>
+          <h3>Engineering Intern</h3>
+          <p class="org">City of Mebane</p>
+          <ul>
+            <li>Designed a water distribution system in <b>ArcGIS</b>.</li>
+            <li>Built geospatial layers and large-format maps for design review.</li>
+          </ul>
+          <div class="ph"><img src="img/civil-map.webp" alt="Murilo beside a large printed service-area map" width="539" height="404" loading="lazy"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="best" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head"><div><span class="label">Top 3</span><h2>Best work</h2></div><span class="label">The rest is in the timeline ↓</span></div>
+      <div class="top3">
+        <article class="pc">
+          <div class="media"><img src="img/clickonaut.webp" alt="CLICKONAUT key art: an astronaut beside Earth among giant cursors" width="880" height="495" style="object-position:66% 50%"></div>
+          <div class="body">
+            <div class="k"><span>Game dev</span><span>Dec 2025 – Aug 2026</span></div>
+            <h3>CLICKONAUT</h3>
+            <p>A commercial PC game I engineered end to end in C# and Unity, from gameplay systems to Steam release.</p>
+            <div class="chips"><span>C#</span><span>Unity</span><span>Procedural gen</span><span>Steamworks</span></div>
+            <a class="more" href="https://store.steampowered.com/app/5029440/CLICKONAUT/" target="_blank" rel="noopener">Wishlist on Steam ↗</a>
+          </div>
+        </article>
+        <article class="pc">
+          <div class="media"><div class="trio3">
+            <figure><img src="img/scott-target.webp" alt="Dr. Scott Spurlock, the target face" width="360" height="357"><span class="tg2">Target</span></figure>
+            <figure><img src="img/scott-before.webp" alt="A face before Scottification" width="345" height="351"><span class="tg2">Before</span></figure>
+            <figure><img src="img/scott-after.webp" alt="The same face after Scottification" width="345" height="351"><span class="tg2 hot">Scottified</span></figure>
+          </div></div>
+          <div class="body">
+            <div class="k"><span>Machine learning</span><span>Apr 2026</span></div>
+            <h3>Scottification</h3>
+            <p>Predicts whether a face resembles my ML professor. With no labeled dataset, I generated one using face swaps.</p>
+            <p class="stat">70%+<small>held-out accuracy</small></p>
+            <div class="chips"><span>TensorFlow</span><span>MobileNetV2</span><span>InsightFace</span></div>
+            <a class="more" href="https://github.com/MuriloLopes477/Face-Resemblance-Detector---Scottification" target="_blank" rel="noopener">View code ↗</a>
+          </div>
+        </article>
+        <article class="pc">
+          <div class="media"><img src="img/arm-bench.jpg" alt="The assembled sign language robotic arm" width="640" height="1413" style="object-position:50% 18%"></div>
+          <div class="body">
+            <div class="k"><span>Robotics · Vision</span><span>Mar – Oct 2024</span></div>
+            <h3>Sign Language Robotic Arm</h3>
+            <p>OpenCV and a classifier read a person's ASL sign, and 16 servos sign it back.</p>
+            <div class="chips"><span>Python</span><span>OpenCV</span><span>Arduino</span><span>MySQL</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="timeline" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head"><div><span class="label">Projects, awards & leadership</span><h2>Timeline</h2></div></div>
+      <div class="tl-wrap">
+        <aside class="yearbox" aria-hidden="true">
+          <span class="label">Now showing</span>
+          <span class="yr" id="yr">2026</span>
+          <div class="legend"><span><i style="background:var(--teal)"></i>Project</span><span><i style="background:var(--red)"></i>Award</span><span><i style="background:var(--amber)"></i>Leadership</span></div>
+        </aside>
+
+        <div class="rail" id="rail">
+          <span class="fill" aria-hidden="true"></span>
+
+          <p class="yr-mark">2026</p>
+          <article class="ev proj big" data-y="2026">
+            <div><div class="top"><span class="t">Project</span><span class="d">Dec 2025 – Aug 2026</span></div>
+            <h3>CLICKONAUT <span class="badge">top 3</span></h3>
+            <p>A roguelike I designed, built and am shipping on Steam through my studio, Studio404Found.</p>
+            <ul class="pts">
+              <li>Engineered the core systems in <b>C#</b> and <b>Unity</b>: procedural run generation, a card-modifier synergy engine and an exponential idle economy.</li>
+              <li>Integrated <b>Steamworks</b> achievements and <b>localized</b> the game into three languages.</li>
+              <li>Owned the full cycle, from first prototype to a live Steam store page.</li>
+            </ul>
+            <div class="chips"><span>C#</span><span>Unity</span><span>Procedural generation</span><span>Steamworks</span></div>
+            <a class="lk" href="https://store.steampowered.com/app/5029440/CLICKONAUT/" target="_blank" rel="noopener">Wishlist on Steam ↗</a></div>
+            <div class="ph"><img src="img/clickonaut.webp" alt="CLICKONAUT key art" width="880" height="495" loading="lazy" style="object-position:66% 50%"></div>
+          </article>
+          <article class="ev proj big" data-y="2026">
+            <div><div class="top"><span class="t">Project</span><span class="d">Apr 2026</span></div>
+            <h3>Scottification <span class="badge">top 3</span></h3>
+            <p>Does this face look like my ML professor, Dr. Scott Spurlock?</p>
+            <ul class="pts">
+              <li>No labeled data existed, so I made it: <b>InsightFace</b> detected and face-swapped random faces toward the target to create a "similar" class.</li>
+              <li>Transfer learning on an ImageNet-pretrained <b>MobileNetV2</b> in TensorFlow/Keras, with a tf.data pipeline and GPU training.</li>
+              <li>Evaluated with scikit-learn reports and confusion matrices: <b>70%+ held-out accuracy</b>.</li>
+            </ul>
+            <a class="lk" href="https://github.com/MuriloLopes477/Face-Resemblance-Detector---Scottification" target="_blank" rel="noopener">View code on GitHub ↗</a></div>
+            <div class="ph trio">
+              <figure><img src="img/scott-target.webp" alt="Dr. Scott Spurlock, the target face" width="360" height="357" loading="lazy"><span class="tg">Target</span></figure>
+              <figure><img src="img/scott-before.webp" alt="A face before transformation" width="345" height="351" loading="lazy"><span class="tg">Before</span></figure>
+              <figure><img src="img/scott-after.webp" alt="The same face after Scottification" width="345" height="351" loading="lazy"><span class="tg hot">Scottified</span></figure>
+            </div>
+          </article>
+          <article class="ev award" data-y="2026">
+            <div><div class="top"><span class="t">Award</span><span class="d">2026</span></div>
+            <h3>Phi Beta Kappa, inducted as a junior</h3>
+            <p>Only <b>three juniors</b> university-wide are selected each year.</p></div>
+          </article>
+
+          <p class="yr-mark">2025</p>
+          <article class="ev lead" data-y="2025">
+            <div><div class="top"><span class="t">Leadership</span><span class="d">Oct 2023 – Dec 2025</span></div>
+            <h3>Founder & President, Elon Rocket Club</h3>
+            <p>Started the club and ran it for two years: weekly meetings, rocket launches and hands-on build training.</p></div>
+          </article>
+          <article class="ev award" data-y="2025">
+            <div><div class="top"><span class="t">Award</span><span class="d">2025</span></div>
+            <h3>3rd place, CCSC Southeastern Programming Competition</h3>
+            <p>Back on the podium a year after placing 2nd.</p></div>
+            <div class="ph"><img src="img/ccsc-2025.webp" alt="Murilo and teammates with third-place plaques" width="1000" height="623" loading="lazy"></div>
+          </article>
+          <p class="yr-mark">2024</p>
+          <article class="ev award" data-y="2024">
+            <div><div class="top"><span class="t">Award</span><span class="d">2024</span></div>
+            <h3>2nd place, CCSC Southeastern Programming Competition</h3>
+            <p>Elon University Team #1, <b>6 problems solved</b>.</p></div>
+            <div class="ph"><img src="img/ccsc-2024.webp" alt="Elon University Team #1 with second-place plaques" width="1000" height="779" loading="lazy"></div>
+          </article>
+          <article class="ev proj big" data-y="2024">
+            <div><div class="top"><span class="t">Project</span><span class="d">Mar – Oct 2024</span></div>
+            <h3>Sign Language Robotic Arm <span class="badge">top 3</span></h3>
+            <p>A 3D-printed, tendon-driven arm that watches a person sign and signs it back.</p>
+            <ul class="pts">
+              <li>A Python script finds the hand with <b>OpenCV</b>, and a <b>classifier</b> turns the static sign into a word.</li>
+              <li>The word maps to a <span class="mono">double[16]</span>, one angle per servo, from a <b>MySQL</b> sign database.</li>
+              <li>The angles stream over <b>serial</b> to an <b>Arduino</b>, which drives 16 servos that pull tendon lines to form the sign.</li>
+            </ul>
+            <div class="chips"><span>Python</span><span>OpenCV</span><span>ML</span><span>Arduino C++</span><span>MySQL</span><span>3D printing</span></div></div>
+            <div class="ph stack"><img src="img/arm-bench.jpg" alt="The assembled robotic arm" width="640" height="1413" loading="lazy" style="object-position:50% 18%"><img src="img/arm-internals.webp" alt="The forearm opened to show the servos" width="463" height="1215" loading="lazy" style="object-fit:contain;background:#1d1a28"></div>
+          </article>
+
+          <p class="yr-mark">2023</p>
+          <article class="ev proj" data-y="2023">
+            <div><div class="top"><span class="t">Project</span><span class="d">Apr – Nov 2023</span></div>
+            <h3>Helpdesk Robot</h3>
+            <p>A desk robot that wakes up when you say “wake up” and knows who it's talking to.</p>
+            <ul class="pts">
+              <li><b>Face recognition</b> checks whether it knows you. If not, it asks your name and saves your photo to a folder under that name.</li>
+              <li><b>Google speech recognition</b> turns your words into text.</li>
+              <li>The text and your name go to <b>ChatGPT</b> through a bridge, so the spoken reply is tailored to you.</li>
+            </ul>
+            <div class="chips"><span>Python</span><span>OpenCV</span><span>Speech-to-text</span><span>OpenAI GPT</span><span>TTS</span></div></div>
+          </article>
+          <article class="ev proj" data-y="2023">
+            <div><div class="top"><span class="t">Project</span><span class="d">2023</span></div>
+            <h3>Electromagnetic Mjölnir</h3>
+            <ul class="pts">
+              <li>A Thor hammer replica that only the “worthy” can lift, with <b>150 kg</b> of electromagnetic pull.</li>
+              <li>I did all of the electrical work, from the electromagnet to the power circuit.</li>
+            </ul>
+            <a class="lk" href="https://www.youtube.com/watch?v=IBo__JMZ0Og" target="_blank" rel="noopener">Watch the build (Portuguese) ↗</a></div>
+            <div class="ph"><img src="img/hammer.webp" alt="Murilo holding the hammer with the electromagnet visible" width="820" height="483" loading="lazy"></div>
+          </article>
+          <article class="ev lead" data-y="2023">
+            <div><div class="top"><span class="t">Leadership · Award</span><span class="d">Nov 2021 – Jan 2023</span></div>
+            <h3>Programming Captain, FRC Team 587</h3>
+            <ul class="pts">
+              <li>Led the programming sub-team for our competition robot, “Free Fall.”</li>
+              <li><b>2022 NC district event winners</b>, and we reached the international competition stage twice.</li>
+            </ul></div>
+            <div class="ph"><img src="img/frc-team.webp" alt="FRC Team 587 with the 2022 winner banner" width="1200" height="900" loading="lazy"></div>
+          </article>
+
+          <p class="yr-mark">2022</p>
+          <article class="ev proj" data-y="2022">
+            <div><div class="top"><span class="t">Project</span><span class="d">Jul – Oct 2022</span></div>
+            <h3>3D Printed Swerve Drive</h3>
+            <ul class="pts">
+              <li>Built as a high school sophomore: <b>3D-printed gears</b> and a giant custom-printed ball bearing.</li>
+              <li><b>PID</b> steering in Java, with full rotation and no tangled wires.</li>
+              <li>It failed above roughly 10 lb, which taught me material selection and designing for load.</li>
+            </ul></div>
+            <div class="ph two"><video src="img/swerve.mp4" poster="img/swerve-poster.webp" autoplay muted loop playsinline aria-label="The swerve module rotating"></video><img src="img/swerve-cad.webp" alt="CAD model of the swerve module" width="760" height="530" loading="lazy" style="object-fit:contain;background:#f2f1f6"></div>
+          </article>
+
+          <p class="yr-mark">More</p>
+          <article class="ev lead big" data-y="More">
+            <div><div class="top"><span class="t">Leadership</span><span class="d">Team of 6</span></div>
+            <h3>Go Baby Go</h3>
+            <p>Led a team of six that turned ride-on cars into <b>two electric wheelchairs</b> for kids who needed them.</p>
+            <ul class="pts">
+              <li>Planned the build, taught the team, and kept both chairs on schedule.</li>
+              <li>Fitted supportive seats and harnesses so each child could ride safely.</li>
+            </ul></div>
+            <div class="ph stack">
+              <figure><img src="img/gbg-cars.webp" alt="The two finished electric wheelchairs" width="594" height="449" loading="lazy"><span class="tg">The two chairs</span></figure>
+              <figure><img src="img/gbg-team.webp" alt="Murilo teaching students at their laptops" width="820" height="461" loading="lazy"><span class="tg">Teaching the team</span></figure>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="tools" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head"><div><span class="label">Toolbox</span><h2>What I use</h2></div></div>
+      <div class="tools">
+        <div><h3>Languages</h3><p>Java, Python, Go, C++, C#, JavaScript, SQL</p></div>
+        <div><h3>Backend</h3><p>GraphQL, PostgreSQL, MySQL, AWS EC2, Docker, CI/CD, Linux</p></div>
+        <div><h3>ML & vision</h3><p>TensorFlow/Keras, PyTorch, scikit-learn, OpenCV, InsightFace</p></div>
+        <div><h3>Hardware & more</h3><p>Arduino, PID control, CAD, 3D printing, ArcGIS, Unity</p></div>
+      </div>
+    </div>
+  </section>
+<section class="sec" id="soft" style="padding-top:24px">
+    <div class="wrap">
+      <div class="head"><div><span class="label">Beyond the code</span><h2>How I work</h2></div></div>
+      <div class="soft">
+        <div class="sk"><h3><i></i>Proactive communication</h3><p>I share progress and blockers early, so teammates and leads are never surprised.</p><span class="ev-l">Practiced leading FRC 587 and Go Baby Go</span></div>
+        <div class="sk"><h3><i></i>Leadership & mentoring</h3><p>I like getting a team moving and teaching people the skills to do it themselves.</p><span class="ev-l">Programming captain · taught a team of 6</span></div>
+        <div class="sk"><h3><i></i>Ownership</h3><p>I take projects from idea to finished product, including the unglamorous parts.</p><span class="ev-l">Took CLICKONAUT from prototype to Steam</span></div>
+        <div class="sk"><h3><i></i>Problem solving under pressure</h3><p>I stay calm and methodical when the clock is running.</p><span class="ev-l">CCSC podiums in 2024 and 2025</span></div>
+        <div class="sk"><h3><i></i>Cross-disciplinary teamwork</h3><p>I'm comfortable working with researchers, engineers and designers, not only other programmers.</p><span class="ev-l">Software · math research · civil engineering · hardware</span></div>
+        <div class="sk"><h3><i></i>Initiative & adaptability</h3><p>I pick up new tools fast and start things when I see a gap.</p><span class="ev-l">Founded Elon Rocket Club · trilingual (PT · EN · ES)</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <span class="label">Contact</span>
+    <h2 class="disp">Let's <span class="grad">build.</span></h2>
+    <button class="mail" type="button" data-copy id="mailText">murilolopes4777@gmail.com</button>
+    <p class="toast" role="status" aria-live="polite"></p>
+    <div class="links"><a href="https://www.linkedin.com/in/murilo-ferreira-lopes" target="_blank" rel="noopener">LinkedIn ↗</a><a href="https://github.com/MuriloLopes477" target="_blank" rel="noopener">GitHub ↗</a><a href="https://store.steampowered.com/app/5029440/CLICKONAUT/" target="_blank" rel="noopener">Steam ↗</a></div>
+    <p class="fine">Graham, North Carolina · Português · English · Español</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* copy email */
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    b.addEventListener('click',function(){
+      var e='murilolopes4777@gmail.com',near=b.closest('.wrap').querySelector('.toast');
+      function fb(){var t=document.getElementById('mailText');var r=document.createRange();r.selectNodeContents(t);var s=getSelection();s.removeAllRanges();s.addRange(r);near.textContent='Selected: '+e;}
+      try{navigator.clipboard.writeText(e).then(function(){near.textContent='Copied '+e},fb)}catch(x){fb()}
+    });
+  });
+
+  /* timeline: active event + sticky year readout */
+  var evs=[].slice.call(document.querySelectorAll('.ev')),yr=document.getElementById('yr'),curY=yr.textContent;
+  function setYear(y){
+    if(y===curY)return;curY=y;
+    if(reduce){yr.textContent=y;return}
+    yr.classList.add('flip');
+    setTimeout(function(){yr.textContent=y;yr.classList.remove('flip')},200);
+  }
+  var act=new IntersectionObserver(function(es){es.forEach(function(en){
+    en.target.classList.toggle('act',en.isIntersecting);
+    if(en.isIntersecting)setYear(en.target.dataset.y);
+  })},{rootMargin:'-42% 0px -42% 0px'});
+  evs.forEach(function(e){act.observe(e)});
+
+  /* pop-in fallback where CSS scroll timelines are missing */
+  var hasST=window.CSS&&CSS.supports&&CSS.supports('animation-timeline: view()');
+  if(!hasST&&!reduce&&'IntersectionObserver' in window){
+    document.documentElement.classList.add('io');
+    var pop=new IntersectionObserver(function(es){es.forEach(function(en){en.target.classList.toggle('in',en.isIntersecting)})},{rootMargin:'-12% 0px -12% 0px'});
+    evs.forEach(function(e){pop.observe(e)});
+  }
+})();
+</script>
+
+</body>
+</html>
